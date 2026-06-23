@@ -172,7 +172,7 @@ export default function Home() {
               lineHeight: 1.05,
             }}
           >
-            NIMBETICS
+            SPECTRAL VIDEOGRAPHY
           </h1>
           <p
             className="font-accent"
@@ -649,7 +649,7 @@ export default function Home() {
                 className="font-display"
                 style={{ color: '#FAFAFA', fontSize: '14px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}
               >
-                NIMBETICS
+                SPECTRAL VIDEOGRAPHY
               </span>
             </div>
             <p
