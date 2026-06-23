@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spectral Videography — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary:   #F47E3E;
+      --color-dark:      #2F4858;
+      --color-neutral:   #E0EEF5;
+      --color-light:     #FFFFFF;
+      --color-secondary: #33658A;
+      --font-display: 'Exo 2', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #1e2a34;
+      color: var(--color-light);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+    header {
+      background: var(--color-dark);
+      border-bottom: 2px solid var(--color-primary);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-light);
+    }
+    header h1 span { color: var(--color-primary); }
+    #logout-btn {
+      background: transparent;
+      border: 1px solid rgba(224,238,245,0.3);
+      color: var(--color-neutral);
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 7px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    #logout-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    /* Login form */
+    #login-view {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 65px);
+      padding: 40px 24px;
+    }
+    .login-card {
+      background: var(--color-dark);
+      border: 1px solid rgba(224,238,245,0.12);
+      border-radius: 8px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-card h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-neutral);
+      margin-bottom: 7px;
+    }
+    .form-group input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(224,238,245,0.2);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--color-light);
+      font-family: var(--font-body);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus { border-color: var(--color-primary); }
+    .btn-primary {
+      width: 100%;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 13px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #e06a28; transform: translateY(-1px); }
+    .login-error {
+      color: #e05555;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* Dashboard */
+    #dashboard-view { display: none; padding: 32px; max-width: 1200px; margin: 0 auto; }
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--color-dark);
+      border: 1px solid rgba(224,238,245,0.12);
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .stat-card .stat-value {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+    .stat-card .stat-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-neutral);
+      margin-top: 4px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-neutral);
+      margin-bottom: 16px;
+    }
+    .table-wrap {
+      background: var(--color-dark);
+      border: 1px solid rgba(224,238,245,0.12);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid rgba(224,238,245,0.15); }
+    th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(224,238,245,0.5);
+      padding: 14px 18px;
+      text-align: left;
+    }
+    tbody tr { border-bottom: 1px solid rgba(224,238,245,0.07); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.04); }
+    td { padding: 14px 18px; font-size: 14px; color: var(--color-neutral); vertical-align: top; }
+    td.name { color: var(--color-light); font-weight: 500; }
+    td.email a { color: var(--color-primary); text-decoration: none; }
+    td.email a:hover { text-decoration: underline; }
+    .badge {
+      display: inline-block;
+      background: rgba(244,126,62,0.15);
+      color: var(--color-primary);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .message-cell { max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      color: rgba(224,238,245,0.4);
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Spectral <span>Videography</span> — Inquiries</h1>
+  <button id="logout-btn" style="display:none" onclick="logout()">Sign Out</button>
+</header>
+
+<!-- Login -->
+<div id="login-view">
+  <div class="login-card">
+    <h2>Admin Access</h2>
+    <div class="form-group">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" placeholder="admin@spectralvideography.com" />
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" placeholder="••••••••••" />
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    <p id="login-error" class="login-error" style="display:none"></p>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard-view">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" id="total-count">—</div>
+      <div class="stat-label">Total Inquiries</div>
+    </div>
+  </div>
+  <p class="section-title">All Project Inquiries</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Sector</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody id="inquiries-body">
+        <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const _sb = window.supabase.createClient(
+    'https://nligygfybljyjdgwxjja.supabase.co',
+    'sb_publishable_gOWCeusy176IQSmNGrL93Q_RSedJTCO'
+  );
+
+  // Check if already logged in
+  _sb.auth.getSession().then(({ data }) => {
+    if (data.session) showDashboard();
+  });
+
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl = document.getElementById('login-error');
+    errEl.style.display = 'none';
+
+    const { error } = await _sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      errEl.textContent = 'Invalid credentials. Please try again.';
+      errEl.style.display = 'block';
+    } else {
+      showDashboard();
+    }
+  }
+
+  document.getElementById('login-password').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  async function logout() {
+    await _sb.auth.signOut();
+    document.getElementById('dashboard-view').style.display = 'none';
+    document.getElementById('login-view').style.display = 'flex';
+    document.getElementById('logout-btn').style.display = 'none';
+  }
+
+  async function showDashboard() {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('dashboard-view').style.display = 'block';
+    document.getElementById('logout-btn').style.display = 'inline-block';
+    loadInquiries();
+  }
+
+  async function loadInquiries() {
+    const { data, error } = await _sb
+      .from('inquiries')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    const tbody = document.getElementById('inquiries-body');
+
+    if (error || !data) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load inquiries.</td></tr>';
+      return;
+    }
+
+    document.getElementById('total-count').textContent = data.length;
+
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No inquiries yet. Share your contact page!</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(row => {
+      const date = new Date(row.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const msg = (row.message || '').replace(/</g, '&lt;');
+      const company = (row.phone || '').replace(/</g, '&lt;');
+      const sector = (row.vertical || '').replace(/</g, '&lt;');
+      const email = (row.email || '').replace(/</g, '&lt;');
+      const name = (row.name || '').replace(/</g, '&lt;');
+      return `<tr>
+        <td style="white-space:nowrap;font-size:12px;color:rgba(224,238,245,0.5)">${date}</td>
+        <td class="name">${name}</td>
+        <td class="email"><a href="mailto:${email}">${email}</a></td>
+        <td>${company}</td>
+        <td>${sector ? '<span class="badge">'+sector+'</span>' : ''}</td>
+        <td class="message-cell" title="${msg}">${msg}</td>
+      </tr>`;
+    }).join('');
+  }
+</script>
+
+</body>
+</html>

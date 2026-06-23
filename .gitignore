@@ -1,0 +1,17 @@
+node_modules/
+out/
+.next/
+next-env.d.ts
+package.json
+package-lock.json
+tsconfig.json
+eslint.config.mjs
+postcss.config.mjs
+next.config.ts
+app/
+components/
+lib/
+public/
+supabase-setup.sql
+AGENTS.md
+CLAUDE.md
