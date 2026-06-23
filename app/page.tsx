@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ApertureMark from '@/components/ApertureMark';
 import SocialLinks from '@/components/SocialLinks';
+import AdminLink from '@/components/AdminLink';
 
 // Service icons (stroke, geometric, gold)
 function RealEstateIcon() {
@@ -701,9 +702,12 @@ export default function Home() {
           <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.4)', fontFamily: 'var(--font-body)' }}>
             © 2026 Spectral Videography LLC. All rights reserved.
           </p>
-          <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.4)', fontFamily: 'var(--font-body)' }}>
-            FAA Part 107 Certified
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.4)', fontFamily: 'var(--font-body)' }}>
+              FAA Part 107 Certified
+            </p>
+            <AdminLink />
+          </div>
         </div>
       </footer>
     </main>

@@ -16,7 +16,7 @@ interface Inquiry {
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  backgroundColor: 'rgba(255,255,255,0.05)',
+  backgroundColor: '#2D2D30',
   border: '1px solid rgba(245,240,232,0.15)',
   borderRadius: '2px',
   padding: '14px 16px',
@@ -26,6 +26,8 @@ const inputStyle: React.CSSProperties = {
   outline: 'none',
   transition: 'border-color 0.2s ease',
   boxSizing: 'border-box',
+  WebkitAppearance: 'none',
+  appearance: 'none',
 };
 
 const labelStyle: React.CSSProperties = {
